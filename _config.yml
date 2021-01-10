@@ -1,0 +1,20 @@
+permalink:        /:categories/:title
+# relative_permalinks: true
+
+
+title:            Thiago Lima
+tagline:          'Scrum Master'
+description:      'Agilista'
+# url:              http://hyde.getpoole.com
+# baseurl:          /
+
+sass:
+  style: compressed
+
+author:
+  name: 'Thiago Lima'
+  url: https://twitter.com/thiagojclima
+  email: falecom@thiagolima.com.br
+  phone: 81 986 595 803
+
+paginate:         5
