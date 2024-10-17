@@ -1,0 +1,126 @@
+.card {
+  &-body {
+    display: flex;
+    justify-content: space-around;
+    align-items: self-start;
+    flex-direction: column;
+  }
+
+  &-tag {
+    @extend .mt-3;
+    @extend .w-100;
+    @extend .d-block;
+    @extend .pt-1;
+    @extend .border-top;
+    font-size: 0.85rem;
+    text-transform: lowercase;
+    @extend .opacity-75;
+  }
+
+  &-icon {
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .justify-content-center;
+    @extend .d-inline-block;
+    @extend .p-1;
+    @extend .border;
+    @extend .rounded-circle;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  &-title {
+    @extend .fw-bold;
+    @extend .m-0;
+    @extend .fs-6;
+    padding: 1rem 0 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 0;
+
+    a {
+      @extend .text-decoration-none;
+      @extend .stretched-link;
+
+      &:after {
+        content: "" !important;
+      }
+    }
+  }
+}
+
+.project {
+  &-container {
+    padding: 3rem 0 0;
+    position: relative;
+    @extend .shadow-sm;
+    @extend .h-100;
+    @extend .card;
+  }
+}
+
+//
+// #ffb8b8
+// #ff3838
+// #fff200
+//
+// #67e6dc
+// #17c0eb
+
+.resources {
+  @extend .col-12;
+  @extend .col-md-6;
+  @extend .col-lg-4;
+
+  &-container {
+    @extend .border-top-0;
+    @extend .mb-4;
+    @extend .card;
+  }
+  &-category {
+    @extend .mb-3;
+    @extend .mt-5;
+  }
+  &-title {
+    @extend .card-title;
+    @extend .m-0;
+    @extend .fw-bold;
+    @extend .h6;
+  }
+  &-body {
+    @extend .card-body; //  d-flex justify-content-around align-items-start flex-column
+  }
+  &-text {
+    @extend .card-text;
+  }
+  &-footer {
+    @extend .card-footer;
+    @extend .bg-transparent;
+  }
+}
+.card-resources .card-footer,
+.card-resources .card-text {
+  margin: 0;
+}
+
+.card-resource-category-text,
+.card-resources .card-footer,
+.card-resources .card-text {
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.card-resources .card-text {
+  padding-top: 1rem;
+}
+
+.card-tipografia {
+  box-shadow: 0 -0.25rem 0px 0px #ff9f1a;
+}
+
+.card-curso {
+  box-shadow: 0 -0.25rem 0px 0px #c56cf0;
+}
+
+.card-ferramentas {
+  box-shadow: 0 -0.25rem 0px 0px #3ae374;
+}

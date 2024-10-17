@@ -1,0 +1,39 @@
+@mixin badge($termo) {
+  @if $termo == 'curso' {
+    background: #3498db;
+    color: #ffffff;
+  
+  } @else if $termo == 'curso' {
+    background: #4E3C9F;
+    color:  var(--bs-white);
+  
+  } @else if $termo == 'ferramentas' {
+    background: #3d3d3d;
+    color:  var(--bs-white);
+  
+  } @else if $termo == 'mentoria' {
+    background: #ff56aa;
+    color:  var(--bs-black);
+  
+  } @else if $termo == 'tipografia' {
+    background: #ff9f1a;
+    color:  var(--bs-black);
+  
+  } @else if $termo == 'evento' {
+    background: var(--bs-teal);
+    color:  var(--bs-black);
+  
+  }@else if $termo == 'aula' {
+    background: var(--bs-orange);
+    color:  var(--bs-black);
+  
+  } @else if $termo == 'ux-collective' {
+    background: #01ccff;
+    color:  var(--bs-black);
+  
+  } @else {
+    background: #333;
+    color: #fff;
+  
+  }
+}

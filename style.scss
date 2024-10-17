@@ -1,0 +1,27 @@
+/*!
+Theme Name: Agência Sumô
+Theme URI: https://sumo.pe/
+Description: Tema do portfólio do Designer
+Author: Wagner Beethoven
+Author URI: https://sumo.pe/
+Version: 1
+
+Tema baseado no blankslate (https://opencollective.com/blankslate) do Bryan Hadaway
+*/
+/*! */
+//sass style.scss:style.css --watch --style compressed
+
+@import "sass/bts/bootstrap";
+@import "sass/icon";
+@import "sass/variables";
+@import "sass/mixin";
+@import "sass/general";
+@import "sass/page";
+@import "sass/header";
+@import "sass/menu";
+@import "sass/content";
+@import "sass/article";
+@import "sass/card";
+@import "sass/share";
+@import "sass/social";
+@import "sass/footer";
