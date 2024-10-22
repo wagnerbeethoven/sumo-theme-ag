@@ -57,6 +57,6 @@ if ($custom_query->have_posts()) : ?>
   wp_reset_postdata();
 
 else :
-  echo '<p>Nenhum post encontrado nesta categoria.</p>';
+  echo '<p>Nenhuma publicação encontrado nesta seção.</p>';
 endif;
 ?>
