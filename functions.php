@@ -393,3 +393,47 @@ function display_reading_time()
 }
 
 add_shortcode('reading_time', 'display_reading_time');
+
+// Redirecionam Páginas de Anexo
+
+function redirect_attachment_page() {
+  if ( is_attachment() ) {
+    global $post;
+    if ( $post && $post->post_parent ) {
+      wp_redirect( get_permalink( $post->post_parent ), 301 );
+      exit;
+    } else {
+      wp_redirect( home_url(), 301 );
+      exit;
+    }
+  }
+}
+add_action( 'template_redirect', 'redirect_attachment_page' );
+
+
+// personalização do titulo do arquivo
+function meu_custom_archive_title( $title ) {
+    if ( is_category() ) {
+        $title = sprintf( __( 'Artigos em "%s"', 'seu-textdomain' ), single_cat_title( '', false ) );
+    } elseif ( is_tag() ) {
+        $title = sprintf( __( 'Conteúdos marcados com "%s"', 'seu-textdomain' ), single_tag_title( '', false ) );
+    } elseif ( is_author() ) {
+        $title = sprintf( __( 'Publicações de: %s', 'seu-textdomain' ), '<span class="vcard">' . get_the_author() . '</span>' );
+    } elseif ( is_year() ) {
+        $title = sprintf( __( 'Arquivos de: %s', 'seu-textdomain' ), get_the_date( 'Y' ) );
+    } elseif ( is_month() ) {
+        $title = sprintf( __( 'Arquivos de: %s', 'seu-textdomain' ), get_the_date( 'F \d\e Y' ) );
+    } elseif ( is_day() ) {
+        $title = sprintf( __( 'Arquivos de: %s', 'seu-textdomain' ), get_the_date( 'j \d\e F \d\e Y' ) );
+    } elseif ( is_post_type_archive() ) {
+        $title = post_type_archive_title( '', false );
+    } elseif ( is_tax() ) {
+        $title = sprintf( __( '%s', 'seu-textdomain' ), single_term_title( '', false ) );
+    } else {
+        $title = __( 'Arquivos', 'seu-textdomain' );
+    }
+    return $title;
+}
+add_filter( 'get_the_archive_title', 'meu_custom_archive_title' );
+?>
+

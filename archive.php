@@ -1,13 +1,13 @@
 <?php get_header(); ?>
 <header class="entry-header mb-5 ">
   <h1 class="page-title pt-5entry-title" itemprop="name">
-    <?php single_term_title(); ?>
+  <?php the_archive_title(); ?>
+
   </h1>
   <div class="archive-meta col-12 col-md-8" itemprop="description">
-
-    <?php if ('' != get_the_archive_description()) {
-      echo get_the_archive_description();
-    } ?>
+  <?php if ( '' != get_the_archive_description() ) {
+        echo get_the_archive_description();
+      } ?>
   </div>
 </header>
 <ul class="loop-post">
