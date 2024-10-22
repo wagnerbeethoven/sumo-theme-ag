@@ -1,0 +1,119 @@
+.comment-button {
+  padding: 0.375rem 0.75rem;
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--bs-border-radius);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color .125s linear;
+  &:hover {
+    background-color: #fff;
+    color: var(--color-primary);
+  }
+}
+
+#comments,
+#respond {
+  margin-top: 3rem;
+}
+#comments {
+  .comments-title {
+    @extend .section-title;
+  }
+  ul {
+    @extend .list-group;
+    li {
+      @extend .list-group-item;
+    }
+  }
+}
+
+.comment {
+  &-author .avatar {
+    @extend .me-3;
+    @extend .rounded-circle;
+  }
+  &-meta {
+    font-size: small;
+    @extend .mb-3;
+  }
+  &-reply-title {
+    @extend .section-title;
+  }
+  &-form {
+    @extend .row;
+    &-comment,
+    &-author {
+      @extend .col-12;
+    }
+    &-email,
+    &-url {
+      @extend .col-6;
+    }
+    &-cookies-consent {
+      // @extend .form-check;
+      input {
+        // @extend .form-check-input;
+      }
+      label {
+        // @extend .form-label-input;
+      }
+    }
+    .form-submit {
+      input[type="submit"] {
+        @extend .comment-button;
+      }
+    }
+    p {
+      @extend .mb-3;
+      label {
+        @extend .form-label;
+      }
+      input[type="text"],
+      input[type="url"],
+      input[type="email"],
+      textarea {
+        @extend .form-control;
+      }
+
+      &-comment {
+      }
+    }
+  }
+}
+.reply {
+  @extend .text-end;
+  a {
+    @extend .text-decoration-none;
+    @extend .d-inline-block;
+    @extend .comment-button;
+line-height: 1;
+    &:before {
+      content: "\F51F";
+      font-family: "Bootstrap-icons";
+      @extend .me-2;
+    }
+  }
+}
+.comment-notes,
+.logged-in-as {
+  font-size: small;
+}
+#webmention-form {
+  margin-top: 1.5rem;
+  @extend .row;
+  p {
+    &:nth-child(2) {
+      @extend .col-8;
+    }
+    &:nth-child(3) {
+      @extend .col-4;
+      input {
+        @extend .comment-button;
+      }
+    }
+  }
+  input[type="url"] {
+    @extend .form-control;
+  }
+}

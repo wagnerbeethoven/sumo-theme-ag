@@ -47,6 +47,8 @@
   ul {
     @extend .list-group;
     @extend .list-group-flush;
+    max-height: 50vh;
+    overflow-y: scroll;
     li {
       @extend .px-0;
       @extend .list-group-item;
