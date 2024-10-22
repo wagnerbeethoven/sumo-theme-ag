@@ -1,7 +1,7 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class('col-12 col-md-8 entry-content pt-4'); ?>>
     <header class="entry-header">
         <h1 class="page-title pt-5 mb-5 entry-title"><?php the_title(); ?></h1>
-        <?php get_template_part('template-parts/post-meta'); ?>
+        <?php get_template_part('template-parts/post-meta', 'post-meta'); ?>
     </header>
     <div class="article_content pt-4">
         <?php the_content(); ?>
