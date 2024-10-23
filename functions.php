@@ -103,30 +103,30 @@ add_action('wp_footer', 'ag_footer');
 function ag_footer()
 {
 ?>
-<script>
-jQuery(document).ready(function($) {
-  var deviceAgent = navigator.userAgent.toLowerCase();
-  if (deviceAgent.match(/(iphone|ipod|ipad)/)) {
-    $("html").addClass("ios");
-    $("html").addClass("mobile");
-  }
-  if (deviceAgent.match(/(Android)/)) {
-    $("html").addClass("android");
-    $("html").addClass("mobile");
-  }
-  if (navigator.userAgent.search("MSIE") >= 0) {
-    $("html").addClass("ie");
-  } else if (navigator.userAgent.search("Chrome") >= 0) {
-    $("html").addClass("chrome");
-  } else if (navigator.userAgent.search("Firefox") >= 0) {
-    $("html").addClass("firefox");
-  } else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
-    $("html").addClass("safari");
-  } else if (navigator.userAgent.search("Opera") >= 0) {
-    $("html").addClass("opera");
-  }
-});
-</script>
+  <script>
+    jQuery(document).ready(function($) {
+      var deviceAgent = navigator.userAgent.toLowerCase();
+      if (deviceAgent.match(/(iphone|ipod|ipad)/)) {
+        $("html").addClass("ios");
+        $("html").addClass("mobile");
+      }
+      if (deviceAgent.match(/(Android)/)) {
+        $("html").addClass("android");
+        $("html").addClass("mobile");
+      }
+      if (navigator.userAgent.search("MSIE") >= 0) {
+        $("html").addClass("ie");
+      } else if (navigator.userAgent.search("Chrome") >= 0) {
+        $("html").addClass("chrome");
+      } else if (navigator.userAgent.search("Firefox") >= 0) {
+        $("html").addClass("firefox");
+      } else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
+        $("html").addClass("safari");
+      } else if (navigator.userAgent.search("Opera") >= 0) {
+        $("html").addClass("opera");
+      }
+    });
+  </script>
 <?php
 }
 add_filter('document_title_separator', 'ag_document_title_separator');
@@ -228,7 +228,7 @@ function ag_enqueue_comment_reply_script()
 function ag_custom_pings($comment)
 {
 ?>
-<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>"><?php echo esc_url(comment_author_link()); ?></li>
+  <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>"><?php echo esc_url(comment_author_link()); ?></li>
 <?php
 }
 add_filter('get_comments_number', 'ag_comment_count', 0);
@@ -396,44 +396,96 @@ add_shortcode('reading_time', 'display_reading_time');
 
 // Redirecionam Páginas de Anexo
 
-function redirect_attachment_page() {
-  if ( is_attachment() ) {
+function redirect_attachment_page()
+{
+  if (is_attachment()) {
     global $post;
-    if ( $post && $post->post_parent ) {
-      wp_redirect( get_permalink( $post->post_parent ), 301 );
+    if ($post && $post->post_parent) {
+      wp_redirect(get_permalink($post->post_parent), 301);
       exit;
     } else {
-      wp_redirect( home_url(), 301 );
+      wp_redirect(home_url(), 301);
       exit;
     }
   }
 }
-add_action( 'template_redirect', 'redirect_attachment_page' );
+add_action('template_redirect', 'redirect_attachment_page');
 
 
 // personalização do titulo do arquivo
-function meu_custom_archive_title( $title ) {
-    if ( is_category() ) {
-        $title = sprintf( __( 'Artigos em "%s"', 'seu-textdomain' ), single_cat_title( '', false ) );
-    } elseif ( is_tag() ) {
-        $title = sprintf( __( 'Conteúdos marcados com "%s"', 'seu-textdomain' ), single_tag_title( '', false ) );
-    } elseif ( is_author() ) {
-        $title = sprintf( __( 'Publicações de: %s', 'seu-textdomain' ), '<span class="vcard">' . get_the_author() . '</span>' );
-    } elseif ( is_year() ) {
-        $title = sprintf( __( 'Arquivos de: %s', 'seu-textdomain' ), get_the_date( 'Y' ) );
-    } elseif ( is_month() ) {
-        $title = sprintf( __( 'Arquivos de: %s', 'seu-textdomain' ), get_the_date( 'F \d\e Y' ) );
-    } elseif ( is_day() ) {
-        $title = sprintf( __( 'Arquivos de: %s', 'seu-textdomain' ), get_the_date( 'j \d\e F \d\e Y' ) );
-    } elseif ( is_post_type_archive() ) {
-        $title = post_type_archive_title( '', false );
-    } elseif ( is_tax() ) {
-        $title = sprintf( __( '%s', 'seu-textdomain' ), single_term_title( '', false ) );
-    } else {
-        $title = __( 'Arquivos', 'seu-textdomain' );
-    }
-    return $title;
+function meu_custom_archive_title($title)
+{
+  if (is_category()) {
+    $title = sprintf(__('Artigos em "%s"', 'seu-textdomain'), single_cat_title('', false));
+  } elseif (is_tag()) {
+    $title = sprintf(__('Conteúdos marcados com "%s"', 'seu-textdomain'), single_tag_title('', false));
+  } elseif (is_author()) {
+    $title = sprintf(__('Publicações de: %s', 'seu-textdomain'), '<span class="vcard">' . get_the_author() . '</span>');
+  } elseif (is_year()) {
+    $title = sprintf(__('Arquivos de: %s', 'seu-textdomain'), get_the_date('Y'));
+  } elseif (is_month()) {
+    $title = sprintf(__('Arquivos de: %s', 'seu-textdomain'), get_the_date('F \d\e Y'));
+  } elseif (is_day()) {
+    $title = sprintf(__('Arquivos de: %s', 'seu-textdomain'), get_the_date('j \d\e F \d\e Y'));
+  } elseif (is_post_type_archive()) {
+    $title = post_type_archive_title('', false);
+  } elseif (is_tax()) {
+    $title = sprintf(__('%s', 'seu-textdomain'), single_term_title('', false));
+  } else {
+    $title = __('Arquivos', 'seu-textdomain');
+  }
+  return $title;
 }
-add_filter( 'get_the_archive_title', 'meu_custom_archive_title' );
-?>
+add_filter('get_the_archive_title', 'meu_custom_archive_title');
 
+
+// Registrar o Post Type "Nota"
+function registrar_post_type_nota()
+{
+  $labels = array(
+    'name' => 'Notas',
+    'singular_name' => 'Nota',
+    'menu_name' => 'Notas',
+    'name_admin_bar' => 'Nota',
+    'add_new' => 'Adicionar Nova',
+    'add_new_item' => 'Adicionar Nova Nota',
+    'new_item' => 'Nova Nota',
+    'edit_item' => 'Editar Nota',
+    'view_item' => 'Ver Nota',
+    'all_items' => 'Todas as Notas',
+    'search_items' => 'Procurar Notas',
+    'not_found' => 'Nenhuma nota encontrada',
+    'not_found_in_trash' => 'Nenhuma nota encontrada na lixeira',
+  );
+
+  $args = array(
+    'labels' => $labels,
+    'public' => true,
+    'publicly_queryable' => true,
+    'show_ui' => true,
+    'show_in_menu' => true,
+    'menu_icon'           => 'dashicons-book',
+    'query_var' => true,
+    'rewrite' => array('slug' => 'nota'),
+    'capability_type' => 'post',
+    'has_archive' => true,
+    'hierarchical' => false,
+    'menu_position' => 20,
+    'supports' => array('title', 'editor', 'custom-fields'),
+    'show_in_rest' => true, // Ativa o editor de blocos (Gutenberg)
+  );
+
+  register_post_type('nota', $args);
+}
+
+add_action('init', 'registrar_post_type_nota');
+
+// associar notas ao indieweb
+function associar_nota_ao_indieweb( $post_types ) {
+  $post_types[] = 'nota';
+  return $post_types;
+}
+add_filter( 'indieweb_post_types', 'associar_nota_ao_indieweb' );
+
+
+?>
