@@ -14,14 +14,14 @@
   <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
   <div class="resources" id="resources-<?php the_ID(); ?>">
-    <div class="resources-container card-<?php $campo_personalizado = get_post_meta(get_the_ID(), 'badge_type', true); if (! empty($campo_personalizado)) : $slugified_value = sanitize_title($campo_personalizado); ?><?php echo esc_html($slugified_value); ?><?php endif; ?>">
+    <div class="resources-container resources-<?php $campo_personalizado = get_post_meta(get_the_ID(), 'badge_type', true); if (! empty($campo_personalizado)) : $slugified_value = sanitize_title($campo_personalizado); ?><?php echo esc_html($slugified_value); ?><?php endif; ?>">
       <div class="resources-body">
         <span class="resources-category">
           <!-- ícone -->
           <?php $campo_personalizado = get_post_meta(get_the_ID(), 'project-icon', true); if (! empty($campo_personalizado)) : $slugified_value = sanitize_title($campo_personalizado); ?> <span class="me-2 bi bi-<?php echo esc_attr($slugified_value); ?>"> </span> <?php endif; ?>
 
           <!-- texto -->
-          <?php $campo_personalizado = get_post_meta(get_the_ID(), 'badge_type', true); if (! empty($campo_personalizado)) : $slugified_value = sanitize_title($campo_personalizado); ?> <span class="card-resource-category-text"> <?php echo esc_html($campo_personalizado); ?> </span> <?php endif; ?>
+          <?php $campo_personalizado = get_post_meta(get_the_ID(), 'badge_type', true); if (! empty($campo_personalizado)) : $slugified_value = sanitize_title($campo_personalizado); ?> <span class="resource-type"> <?php echo esc_html($campo_personalizado); ?> </span> <?php endif; ?>
 
         </span>
         <!-- título -->

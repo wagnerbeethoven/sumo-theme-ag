@@ -29,26 +29,57 @@ if ($projetos_query->have_posts()) :
     // Obter as tags do post
     $post_tags = get_the_tags();
 ?>
-    <div class="loop-project-item">
-      <div class="project-container card card-<?php echo esc_attr($category_slug); ?>">
-        <div class="card-body">
-          <div>
-            <span class="card-icon bi bi-<?php echo esc_attr($icon_name); ?>"></span>
-            <span class="visually-hidden"><?php echo esc_html($icon_name); ?></span>
 
-            <h3 class="card-title">
+
+    <div class="loop-project-item">
+      <div class="project-container p-0 card card-<?php echo esc_attr($category_slug); ?>">
+
+
+        <div class="card-body">
+          <?php if (has_post_thumbnail()) : ?>
+            <figure class="ratio ratio-1x1">
+              <?php the_post_thumbnail('medium', array('class' => 'rounded')); ?>
+            </figure>
+          <?php endif; ?>
+          <div>
+          <span class="card-icon me-3 bi bi-<?php echo esc_attr($icon_name); ?>"style="
+    margin-top: -32px;
+    background: #fff;
+    z-index: 3;
+    position: relative;
+    left: 8px;
+    box-shadow: 0 0 0 4px #fff;
+    margin-bottom: .5rem;
+"></span>
+          <span class="visually-hidden"><?php echo esc_html($icon_name); ?></span>
+
+            <h3 class=" card-title">
               <a href="<?php the_permalink(); ?>">
                 <?php the_title(); ?>
               </a>
             </h3>
           </div>
+
+
+          <?php
+          // Exibe os valores do campo personalizado 'slogan'
+          $slogan = get_post_meta(get_the_ID(), 'slogan', true);
+          if ($slogan) {
+            $tags_array = explode(',', $slogan);
+            foreach ($tags_array as $tag) {
+              echo '<small>' . $tag . '</small>';
+            }
+          }
+          ?>
+
+          
           <?php
           // Exibe os valores do campo personalizado 'project_tag'
           $project_tag = get_post_meta(get_the_ID(), 'project_tag', true);
           if ($project_tag) {
             $tags_array = explode(',', $project_tag);
             foreach ($tags_array as $tag) {
-              echo '<small class="card-tag">' . esc_html(trim($tag)) . '</small>';
+              echo '<small class="border-top pt-3 mt-3 w-100 d-block">' . esc_html(trim($tag)) . '</small>';
             }
           }
           ?>
