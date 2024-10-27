@@ -3,7 +3,11 @@
     <a href="/sobre" title="Experiências profissionais, acadêmicas">Conheça minha trajetória</a> &bull; <a
       href="/contato" title="Fale comigo por email, telefone e nas redes socias">Fale comigo</a>.
     <?php
-    if (is_single()) : ?><br>Acesse meus <a href="<?php echo home_url(); ?>/projetos">projetos</a>, leia
+    if (is_single()) : ?><br>Acesse meus <?php $slug_categoria = 'projetos';
+      $categoria = get_category_by_slug($slug_categoria);
+      if (! is_wp_error($categoria)) {
+        echo '<a href="' . esc_url(get_category_link($categoria->term_id)) . '">projetos</a>';
+      } ?>, leia
     meus <?php $slug_categoria = 'textos';
             $categoria = get_category_by_slug($slug_categoria);
             if (! is_wp_error($categoria)) {
