@@ -1,7 +1,7 @@
 .card {
   &-body {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: self-start;
     flex-direction: column;
   }
@@ -25,10 +25,17 @@
     @extend .p-1;
     @extend .border;
     @extend .rounded-circle;
+    @extend .position-relative;
     width: 2.5rem;
     height: 2.5rem;
-  }
+    margin-top: -32px;
+    background: #fff;
+    z-index: 3;
+    left: 8px;
+    box-shadow: 0 0 0 4px #fff;
+    margin-bottom: 0.5rem;
 
+  }
   &-title {
     @extend .fw-bold;
     @extend .m-0;
@@ -56,9 +63,12 @@
     @extend .h-100;
     @extend .card;
   }
+  &-figure{
+    img {
+      @extend .object-fit-cover;
+    }
+  }
 }
-
-
 
 //
 // #ffb8b8
@@ -99,36 +109,19 @@
     @extend .bg-transparent;
   }
 
-&-type{
-  font-size: 0.875rem;
-  margin: 0;
-}
+  &-type {
+    font-size: 0.875rem;
+    margin: 0;
+  }
   &-tipografia {
     border-top-color: #ff9f1a;
   }
-  
+
   &-curso {
     border-top-color: #c56cf0;
   }
-  
+
   &-ferramentas {
-    border-top-color:0 -0.25rem 0px 0px #3ae374;
+    border-top-color: 0 -0.25rem 0px 0px #3ae374;
   }
-  
 }
-// .card-resources .card-footer,
-// .card-resources .card-text {
-//   margin: 0;
-// }
-
-// .card-resource-category-text,
-// .card-resources .card-footer,
-// .card-resources .card-text {
-//   font-size: 0.875rem;
-//   margin: 0;
-// }
-
-// .card-resources .card-text {
-//   padding-top: 1rem;
-// }
-
