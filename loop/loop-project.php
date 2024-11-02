@@ -33,31 +33,33 @@ if ($projetos_query->have_posts()) :
       <div class="project-container p-0 card card-<?php echo esc_attr($category_slug); ?>">
 
         <div class="card-body">
-          <?php if (has_post_thumbnail()) : ?>
-            <figure class="project-figure ratio ratio-1x1">
-              <?php the_post_thumbnail('medium', array('class' => 'rounded')); ?>
-            </figure>
-          <?php endif; ?>
-          <div>
-            <span class="card-icon me-3 bi bi-<?php echo esc_attr($icon_name); ?>"></span>
-            <span class="visually-hidden"><?php echo esc_html($icon_name); ?></span>
+          <div class="w-100">
+            <?php if (has_post_thumbnail()) : ?>
+              <figure class="project-figure ratio ratio-1x1">
+                <?php the_post_thumbnail('medium', array('class' => 'rounded')); ?>
+              </figure>
+            <?php endif; ?>
+            <div>
+              <span class="card-icon me-3 bi bi-<?php echo esc_attr($icon_name); ?>"></span>
+              <span class="visually-hidden"><?php echo esc_html($icon_name); ?></span>
 
-            <h3 class=" card-title">
-              <a href="<?php the_permalink(); ?>">
-                <?php the_title(); ?>
-              </a>
-            </h3>
-          </div>
-          <?php
-          // Exibe os valores do campo personalizado 'slogan'
-          $slogan = get_post_meta(get_the_ID(), 'slogan', true);
-          if ($slogan) {
-            $tags_array = explode(',', $slogan);
-            foreach ($tags_array as $tag) {
-              echo '<small>' . $tag . '</small>';
+              <h3 class=" card-title">
+                <a href="<?php the_permalink(); ?>">
+                  <?php the_title(); ?>
+                </a>
+              </h3>
+            </div>
+            <?php
+            // Exibe os valores do campo personalizado 'slogan'
+            $slogan = get_post_meta(get_the_ID(), 'slogan', true);
+            if ($slogan) {
+              $tags_array = explode(',', $slogan);
+              foreach ($tags_array as $tag) {
+                echo '<small>' . $tag . '</small>';
+              }
             }
-          }
-          ?>
+            ?>
+          </div>
           <?php
           // Exibe os valores do campo personalizado 'project_tag'
           $project_tag = get_post_meta(get_the_ID(), 'project_tag', true);
