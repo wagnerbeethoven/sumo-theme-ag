@@ -10,41 +10,49 @@
   </div>
 </header>
 
-<div class="row" data-masonry="{&quot;percentPosition&quot;: true }">
-  <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+<ul class="loop-post">
+  <?php
+  // Query para listar todos os posts
+  $all_posts = new WP_Query(array(
+    'post_type' => 'post',  // Tipo de post
+    'posts_per_page' => -1, // -1 para listar todos
+    'category_name'  => 'recursos', // Substitua pelo slug da sua categoria
+    'order'  =>  'ASC' ,
+    'orderby' =>  'title'
 
-  <div class="resources" id="resources-<?php the_ID(); ?>">
-    <div class="resources-container resources-<?php $campo_personalizado = get_post_meta(get_the_ID(), 'badge_type', true); if (! empty($campo_personalizado)) : $slugified_value = sanitize_title($campo_personalizado); ?><?php echo esc_html($slugified_value); ?><?php endif; ?>">
-      <div class="resources-body">
-        <span class="resources-category">
-          <!-- ícone -->
-          <?php $campo_personalizado = get_post_meta(get_the_ID(), 'project-icon', true); if (! empty($campo_personalizado)) : $slugified_value = sanitize_title($campo_personalizado); ?> <span class="me-2 bi bi-<?php echo esc_attr($slugified_value); ?>"> </span> <?php endif; ?>
+  ));
 
-          <!-- texto -->
-          <?php $campo_personalizado = get_post_meta(get_the_ID(), 'badge_type', true); if (! empty($campo_personalizado)) : $slugified_value = sanitize_title($campo_personalizado); ?> <span class="resource-type"> <?php echo esc_html($campo_personalizado); ?> </span> <?php endif; ?>
+  if ($all_posts->have_posts()) :
+    while ($all_posts->have_posts()) : $all_posts->the_post(); ?>
 
+      <li class="loop-post-item">
+
+        <span class="loop-post-date">
+          <!-- <time datetime="<?php echo get_the_date('Y-m-d'); ?>">
+              <?php echo get_the_date(); ?>:
+            </time> -->
+          <?php
+          // Recupera o valor do campo personalizado 'tipo'
+          $campo_personalizado = get_post_meta(get_the_ID(), 'badge_type', true);
+
+          if (! empty($campo_personalizado)) :
+            // Slugifica o valor
+            $slugified_value = sanitize_title($campo_personalizado);
+          ?> <?php echo esc_html($campo_personalizado); ?>: 
+          <?php endif; ?>
         </span>
-        <!-- título -->
-        <h2 class="resources-title"><?php the_title(); ?></h2>
-        <!-- título -->
-        <div class="resources-text">
-          <?php the_content(); ?>
-        </div>
-        
-      </div>
-      <div class="resources-footer">
-        <?php $link_adicional = get_post_meta(get_the_ID(), 'publication_url', true); $nome_link_adicional = get_post_meta(get_the_ID(), 'publication_source', true); if (! empty($link_adicional)) :?>
-        <a class="text-truncate" href="<?php echo esc_url($link_adicional); ?>">
-          <?php echo esc_html($nome_link_adicional); ?>
-        </a>
-        <?php endif; ?>
-      </div>
-    </div>
-  </div>
+
+        <h3 class="loop-post-title">
+          <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+        </h3>
 
 
-  <?php endwhile;
-  endif; ?>
-</div>
+      </li>
+    <?php endwhile;
+    wp_reset_postdata();  // Resetar o loop
+  else : ?>
+    <li>Nenhum post encontrado.</li>
+  <?php endif; ?>
+</ul>
 <?php get_template_part('nav', 'below'); ?>
 <?php get_footer(); ?>

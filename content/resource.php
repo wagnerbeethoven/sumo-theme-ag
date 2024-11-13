@@ -4,11 +4,11 @@
         <?php get_template_part('template-parts/post-meta', 'post-meta'); ?>
     </header>
     <div class="article_content pt-4">
+        <p></p>
         <?php the_content(); ?>
 
 
-
-        <p>
+        <p class="mt-5">
             <?php $link_adicional = get_post_meta(get_the_ID(), 'publication_url', true);
             $nome_link_adicional = get_post_meta(get_the_ID(), 'publication_source', true);
             if (! empty($link_adicional)) : ?>
