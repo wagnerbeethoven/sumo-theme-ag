@@ -1,3 +1,5 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 <?php get_template_part('template-parts/banner', 'banner'); ?>
 
 <div class="row pt-4">
@@ -15,6 +17,7 @@
                 <?php the_content(); ?>
             </div>
 
+           
             <?php get_template_part('template-parts/share', 'share'); ?>
             <?php get_template_part('template-parts/meta', 'meta'); ?>
             <?php get_template_part('template-parts/nav', 'nav'); ?>
@@ -27,7 +30,6 @@
             }
             ?>
         </article>
+
     </div>
 </div>
-
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

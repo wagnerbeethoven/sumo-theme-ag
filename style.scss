@@ -8,7 +8,7 @@ Version: 1
 
 Tema baseado no blankslate (https://opencollective.com/blankslate) do Bryan Hadaway
 */
-//sass style.scss:style.css --watch --style compressed
+// sass style.scss:style.css --watch --style compressed
 
 @import "sass/bts/bootstrap";
 @import "sass/icon";
@@ -19,6 +19,7 @@ Tema baseado no blankslate (https://opencollective.com/blankslate) do Bryan Hada
 @import "sass/header";
 @import "sass/menu";
 @import "sass/content";
+@import "sass/btn";
 @import "sass/forms";
 @import "sass/article";
 @import "sass/card";

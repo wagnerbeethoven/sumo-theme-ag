@@ -1,4 +1,14 @@
-<p class="page-thanks pt-5 my-5">Obrigado por chegar até aqui 🤗</p>
+<p class="page-thanks pt-5 my-5">Obrigado por chegar até aqui 🤗.
+<?php
+            $link_adicional = get_post_meta(get_the_ID(), 'publication_url', true);
+            if (! empty($link_adicional)) :
+            ?>
+
+  <a class="text-decoration-none ms-3" href="<?php echo esc_url($link_adicional); ?>" target="_blank">
+    <u>Curta o projeto no Behance</u> 👍
+  </a>
+<?php endif; ?>
+</p>
 
 <?php
 $custom_pageurl = get_post_meta(get_the_ID(), 'pageurl', true);

@@ -1,3 +1,4 @@
+
 <?php
 // Definir os argumentos da consulta
 $args = array(
@@ -36,7 +37,7 @@ if ($projetos_query->have_posts()) :
           <div class="w-100">
             <?php if (has_post_thumbnail()) : ?>
               <figure class="project-figure ratio ratio-1x1">
-                <?php the_post_thumbnail('medium', array('class' => 'rounded')); ?>
+                <?php the_post_thumbnail('full', array('class' => 'rounded')); ?>
               </figure>
             <?php endif; ?>
             <div>
