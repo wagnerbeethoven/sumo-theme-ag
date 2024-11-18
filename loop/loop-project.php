@@ -4,7 +4,7 @@
 $args = array(
   'post_type' => 'post', // Ou 'projetos' se for um custom post type
   'category_name' => 'projetos', // Substitua pelo slug da categoria dos projetos
-  'posts_per_page' => 10,
+  'posts_per_page' => 8,
 );
 
 // Criar a consulta personalizada
@@ -37,7 +37,7 @@ if ($projetos_query->have_posts()) :
           <div class="w-100">
             <?php if (has_post_thumbnail()) : ?>
               <figure class="project-figure ratio ratio-1x1">
-                <?php the_post_thumbnail('full', array('class' => 'rounded')); ?>
+                <?php the_post_thumbnail('medium', array('class' => 'rounded')); ?>
               </figure>
             <?php endif; ?>
             <div>
