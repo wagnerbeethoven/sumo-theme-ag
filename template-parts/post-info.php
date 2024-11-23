@@ -1,6 +1,6 @@
 <ul class="post-meta post-meta-header">
   <li>
-    <time datetime="<?php the_date('Y-m-d'); ?>">
+    <time class="dt-published" datetime="<?php the_date('Y-m-d'); ?>">
       <span class="bi bi-calendar-event" title="Data de publicação"></span>
       <?php echo get_the_date('d/m/Y'); ?>
     </time>

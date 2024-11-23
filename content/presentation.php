@@ -1,6 +1,6 @@
 
 
-<article id="presentation-<?php the_ID(); ?>" <?php post_class('presentation-content'); ?>>
+<article id="presentation-<?php the_ID(); ?>" <?php post_class('presentation-content e-content'); ?>>
   <iframe class="speakerdeck-iframe" frameborder="0" src="
   <?php
 

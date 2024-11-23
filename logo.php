@@ -1,5 +1,5 @@
 <div class="site-logo">
-  <a href="<?php echo esc_url(home_url('/')); ?>">
+  <a class="u-url" href="<?php echo esc_url(home_url('/')); ?>">
     <?php if (has_custom_logo()) : ?>
     <?php
       // Obtém o ID do logotipo personalizado
