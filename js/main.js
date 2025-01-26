@@ -84,9 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
   addExternalLinkAttributes();
   addTranslationLinks();
   updateThemeAutomatically();
-});
 
-document.addEventListener("DOMContentLoaded", function () {
   // Selecionar a div de conteúdo e a div do TOC
   const article_content = document.querySelector('.article_content');
   const tocSidebar = document.querySelector('.toc-sidebar');

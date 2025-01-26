@@ -51,15 +51,12 @@ if ($projetos_query->have_posts()) :
               </h3>
             </div>
             <?php
-            // Exibe os valores do campo personalizado 'slogan'
-            $slogan = get_post_meta(get_the_ID(), 'slogan', true);
-            if ($slogan) {
-              $tags_array = explode(',', $slogan);
-              foreach ($tags_array as $tag) {
-                echo '<small>' . $tag . '</small>';
-              }
-            }
-            ?>
+            if (has_excerpt()):
+              echo '<p>';
+      echo strip_tags(get_the_excerpt());
+      echo '</p>';
+    endif;
+    ?>
           </div>
           <?php
           // Exibe os valores do campo personalizado 'project_tag'

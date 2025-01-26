@@ -8,10 +8,11 @@
   &-banner {
     @extend .ratio;
     @extend .ratio-21x9;
-
+    aspect-ratio: 3 / 2 !important;
     img {
       @extend .rounded;
       @extend .object-fit-cover;
+      // @extend .img-fluid;img-fluid
     }
 
     &-legend {
@@ -103,35 +104,44 @@
     @extend .badge;
 
     &-aula {
-      @include badge('aula')
+      @include badge("aula");
     }
 
     &-curso {
-      @include badge('ferramentas')
+      @include badge("ferramentas");
     }
 
     &-ferramentas {
-      @include badge('ferramentas')
+      @include badge("ferramentas");
     }
 
     &-mentoria {
-      @include badge('mentoria')
+      @include badge("mentoria");
     }
     &-tipografia {
-      @include badge('mentoria')
+      @include badge("mentoria");
     }
     &-recnplay,
     &-evento {
-      @include badge('evento')
+      @include badge("evento");
     }
 
     &-ux-collective {
-      @include badge('ux-collective')
+      @include badge("ux-collective");
     }
   }
 }
 
 .loop {
+
+  &-post-group-title {
+    font-size: .825rem;
+    opacity: .85;
+    font-weight: normal;
+    text-transform: lowercase;
+}
+
+
   &-post {
     @extend .list-group;
     @extend .list-group-flush;
