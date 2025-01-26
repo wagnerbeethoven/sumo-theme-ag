@@ -3,7 +3,7 @@
 get_header(); ?>
 <h1><?php the_title(); ?></h1>
 <section class="section-posts">
-  <h2 class="section-title">Publicações por Categoria</h2>
+  <h2 class="section-title">Publicações</h2>
   <?php
   // Obter todas as categorias, ordenadas pela data do último post
   $categories = get_categories(array(

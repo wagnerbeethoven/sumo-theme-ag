@@ -50,7 +50,7 @@
           <div class="card-body">
             <div class="w-100">
               <?php if (has_post_thumbnail()) : ?>
-                <figure class="ratio ratio-1x1">
+                <figure class="ratio ratio-4x3">
                   <?php the_post_thumbnail('medium', array('class' => 'rounded')); ?>
                 </figure>
               <?php endif; ?>
