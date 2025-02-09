@@ -488,4 +488,8 @@ function associar_nota_ao_indieweb( $post_types ) {
 add_filter( 'indieweb_post_types', 'associar_nota_ao_indieweb' );
 
 
-?>
+// ATIVAR O BLOGROLL
+add_filter('pre_option_link_manager_enabled', '__return_true');
+
+
+?>			

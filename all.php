@@ -1,5 +1,5 @@
 <?php
-/* Template Name: List All Posts and Pages */
+/* Template Name: Lista com todos os links */
 get_header(); ?>
 <h1><?php the_title(); ?></h1>
 <section class="section-posts">
