@@ -3,7 +3,7 @@
 <div class="row pt-4">
     <?php get_template_part('template-parts/sidebar', 'sidebar'); ?>
 
-    <div class="col-12 col-md-8 entry-content">
+    <div class="col-12 mx-auto col-md-8 entry-content">
         <article id="post-<?php the_ID(); ?>" <?php post_class('e-content'); ?>>
             <header class="entry-header mb-5">
                 <?php the_title('<h1 class="page-title entry-title" itemprop="name">', '</h1>'); ?>
