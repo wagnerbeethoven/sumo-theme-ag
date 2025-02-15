@@ -60,7 +60,7 @@ $available_letters = array_keys($grouped_links);
         <?php
         foreach ($letters as $letter) {
             if (in_array($letter, $available_letters)) {
-                echo '<li class="nav-item"><a class="nav-link fw-bold text-primary" href="#' . $letter . '">' . $letter . '</a></li>';
+                echo '<li class="nav-item"><a class="nav-link fw-bold text-dark" href="#' . $letter . '">' . $letter . '</a></li>';
             } else {
                 echo '<li class="nav-item"><span class="nav-link text-muted">' . $letter . '</span></li>';
             }
@@ -68,7 +68,7 @@ $available_letters = array_keys($grouped_links);
 
         // Adiciona um item para números/símbolos se existirem
         if (!empty($symbols_links)) {
-            echo '<li class="nav-item"><a class="nav-link fw-bold text-primary" href="#symbols">#</a></li>';
+            echo '<li class="nav-item"><a class="nav-link fw-bold text-dark" href="#symbols">#</a></li>';
         } else {
             echo '<li class="nav-item"><span class="nav-link text-muted">#</span></li>';
         }
@@ -79,11 +79,11 @@ $available_letters = array_keys($grouped_links);
 <!-- Exibir links organizados por letras -->
 <?php
 foreach ($grouped_links as $letter => $links_array) {
-    echo '<h2 id="' . $letter . '" class="mt-5 display-5 fw-bold text-primary">' . $letter . '</h2>';
+    echo '<h2 id="' . $letter . '" class="mt-5 display-5 fw-bold text-dark">' . $letter . '</h2>';
     echo '<ul class="list-group list-group-flush">';
     foreach ($links_array as $link) {
         echo '<li class="px-0 list-group-item">';
-        echo '<a href="' . esc_url($link->link_url) . '" target="_blank" class="stretched-link text-decoration-none text-primary fw-bold">' . esc_html($link->link_name) . '</a>: ';
+        echo '<a href="' . esc_url($link->link_url) . '" target="_blank" class="stretched-link text-decoration-none text-dark fw-bold">' . esc_html($link->link_name) . '</a>: ';
         if (!empty($link->link_description)) {
             echo '<span class="mb-0 text-muted small">' . esc_html($link->link_description) . '</span>';
         }
@@ -95,12 +95,12 @@ foreach ($grouped_links as $letter => $links_array) {
 
 <!-- Exibir links que começam com números ou símbolos -->
 <?php if (!empty($symbols_links)) { ?>
-    <h2 id="symbols" class="mt-5 display-5 fw-bold text-primary">#</h2>
+    <h2 id="symbols" class="mt-5 display-5 fw-bold text-dark">#</h2>
     <ul class="list-group list-group-flush">
         <?php
         foreach ($symbols_links as $link) {
             echo '<li class="px-0 list-group-item">';
-            echo '<a href="' . esc_url($link->link_url) . '" target="_blank" class="stretched-link text-decoration-none text-primary fw-bold">' . esc_html($link->link_name) . '</a>: ';
+            echo '<a href="' . esc_url($link->link_url) . '" target="_blank" class="stretched-link text-decoration-none text-dark fw-bold">' . esc_html($link->link_name) . '</a>: ';
             if (!empty($link->link_description)) {
                 echo '<span class="mb-0 text-muted small">' . esc_html($link->link_description) . '</span>';
             }
