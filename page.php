@@ -10,9 +10,9 @@ if (have_posts()) :
       <?php the_title('<h1 class="page-title entry-title mb-4" itemprop="name">', '</h1>'); ?>
     </header>
     <div class="row pt-4">
-      <?php get_template_part('template-parts/sidebar', 'sidebar'); ?>
-
+      
       <div class="col-12 col-md-8 entry-content">
+        <?php get_template_part('template-parts/sidebar', 'sidebar'); ?>
         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 

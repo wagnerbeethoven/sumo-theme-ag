@@ -1,495 +1,162 @@
 <?php
 
-
-// JS
-function theme_script()
-{
-  // Scripts necessários
-  wp_enqueue_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js', array(), '3.7.1', true);
-  wp_enqueue_script('popper-js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js', array('jquery'), '2.11.8', true);
-  wp_enqueue_script('bootstrap-js', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js', array('jquery', 'popper-js'), '5.3.3', true);
-  wp_enqueue_script('google-translate', '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit', array(), null, true);
-  wp_enqueue_script('masonry-js', 'https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js', array(), '4.2.2', true);
-  wp_enqueue_script('main-js', get_template_directory_uri() . '/js/main.js', array('jquery'), '1.0', true);
+// Adiciona scripts ao tema
+function theme_scripts() {
+    wp_enqueue_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js', [], '3.7.1', true);
+    wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', ['jquery'], '5.3.3', true);
+    wp_enqueue_script('google-translate', '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit', [], null, true);
+    wp_enqueue_script('main-js', get_template_directory_uri() . '/js/main.js', ['jquery', 'bootstrap-js'], '1.0', true);
+    
 }
-add_action('wp_enqueue_scripts', 'theme_script');
+add_action('wp_enqueue_scripts', 'theme_scripts');
 
-
-// Estilos
-function theme_styles()
-{
-  // Bootstrap CSS
-  // wp_enqueue_style(
-  //   'bootstrap',
-  //   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css',
-  //   array(), // Sem dependências
-  //   '5.3.0'
-  // );
-
-  // Fontes do Google
-  wp_enqueue_style(
-    'open-sans',
-    'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
-    array(), // Sem dependências
-    null
-  );
-
-  // Bootstrap Icons
-  wp_enqueue_style(
-    'bootstrap-icons',
-    'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css',
-    array(), // Sem dependências
-    '1.11.3'
-  );
-
-  // Estilo principal do tema - depende de bootstrap, open-sans e bootstrap-icons
-  wp_enqueue_style(
-    'main-css',
-    get_stylesheet_directory_uri() . '/style.css',
-    array('bootstrap', 'open-sans', 'bootstrap-icons'), // Dependências
-    '1.0.0',
-    'all'
-  );
+// Adiciona estilos ao tema
+function theme_styles() {
+    wp_enqueue_style('open-sans', 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap', [], null);
+    wp_enqueue_style('bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css', [], '1.11.3');
+    wp_enqueue_style('main-css', get_stylesheet_directory_uri() . '/style.css', ['open-sans', 'bootstrap-icons'], '1.0.0', 'all');
 }
-add_action('wp_enqueue_scripts', 'theme_styles', 20); // Prioridade 20 para carregar por último
+add_action('wp_enqueue_scripts', 'theme_styles', 20);
 
-
-
+// Configurações do tema
+function ag_setup() {
+    load_theme_textdomain('ag', get_template_directory() . '/languages');
+    add_theme_support('title-tag');
+    add_theme_support('post-thumbnails');
+    add_theme_support('responsive-embeds');
+    add_theme_support('automatic-feed-links');
+    add_theme_support('html5', ['search-form', 'navigation-widgets']);
+    add_theme_support('appearance-tools');
+    // add_theme_support('woocommerce');
+    global $content_width;
+    $content_width = $content_width ?? 1920;
+}
 add_action('after_setup_theme', 'ag_setup');
-function ag_setup()
-{
-  load_theme_textdomain('ag', get_template_directory() . '/languages');
-  add_theme_support('title-tag');
-  add_theme_support('post-thumbnails');
-  add_theme_support('responsive-embeds');
-  add_theme_support('automatic-feed-links');
-  add_theme_support('html5', array('search-form', 'navigation-widgets'));
-  add_theme_support('appearance-tools');
-  add_theme_support('woocommerce');
-  global $content_width;
-  if (!isset($content_width)) {
-    $content_width = 1920;
-  }
-  // register_nav_menus(array(
-  //   'main-menu' => esc_html__(
-  //     'Main Menu',
-  //     'ag'
-  //   )
-  // ));
-}
-add_action('admin_notices', 'ag_notice');
-function ag_notice()
-{
-  $user_id = get_current_user_id();
-  $admin_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-  $param = (count($_GET)) ? '&' : '?';
-  if (!get_user_meta($user_id, 'ag_notice_dismissed_11') && current_user_can('manage_options'))
-    echo '<div class="notice notice-info"><p><a href="' . esc_url($admin_url), esc_html($param) . 'dismiss" class="alignright" style="text-decoration:none"><big>' . esc_html__('Ⓧ', 'ag') . '</big></a>' . wp_kses_post(__('<big><strong>🏆 Thank you for using ag!</strong></big>', 'ag')) . '<p>' . esc_html__('Powering over 10k websites! Buy me a sandwich! 🥪', 'ag') . '</p><a href="https://github.com/bhadaway/ag/issues/57" class="button-primary" target="_blank"><strong>' . esc_html__('How do you use ag?', 'ag') . '</strong></a> <a href="https://opencollective.com/ag" class="button-primary" style="background-color:green;border-color:green" target="_blank"><strong>' . esc_html__('Donate', 'ag') . '</strong></a> <a href="https://wordpress.org/support/theme/ag/reviews/#new-post" class="button-primary" style="background-color:purple;border-color:purple" target="_blank"><strong>' . esc_html__('Review', 'ag') . '</strong></a> <a href="https://github.com/bhadaway/ag/issues" class="button-primary" style="background-color:orange;border-color:orange" target="_blank"><strong>' . esc_html__('Support', 'ag') . '</strong></a></p></div>';
-}
-add_action('admin_init', 'ag_notice_dismissed');
-function ag_notice_dismissed()
-{
-  $user_id = get_current_user_id();
-  if (isset($_GET['dismiss']))
-    add_user_meta($user_id, 'ag_notice_dismissed_11', 'true', true);
-}
-add_action('wp_enqueue_scripts', 'ag_enqueue');
-function ag_enqueue()
-{
-  wp_enqueue_style('ag-style', 'get_stylesheet_uri()');
-  wp_enqueue_script('jquery');
-}
-add_action('wp_footer', 'ag_footer');
-function ag_footer()
-{
-?>
-  <script>
-    jQuery(document).ready(function($) {
-      var deviceAgent = navigator.userAgent.toLowerCase();
-      if (deviceAgent.match(/(iphone|ipod|ipad)/)) {
-        $("html").addClass("ios");
-        $("html").addClass("mobile");
-      }
-      if (deviceAgent.match(/(Android)/)) {
-        $("html").addClass("android");
-        $("html").addClass("mobile");
-      }
-      if (navigator.userAgent.search("MSIE") >= 0) {
-        $("html").addClass("ie");
-      } else if (navigator.userAgent.search("Chrome") >= 0) {
-        $("html").addClass("chrome");
-      } else if (navigator.userAgent.search("Firefox") >= 0) {
-        $("html").addClass("firefox");
-      } else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
-        $("html").addClass("safari");
-      } else if (navigator.userAgent.search("Opera") >= 0) {
-        $("html").addClass("opera");
-      }
-    });
-  </script>
-<?php
-}
-add_filter('document_title_separator', 'ag_document_title_separator');
-function ag_document_title_separator($sep)
-{
-  $sep = esc_html('|');
-  return $sep;
-}
-add_filter('the_title', 'ag_title');
-function ag_title($title)
-{
-  if ($title == '') {
-    return esc_html('...');
-  } else {
-    return wp_kses_post($title);
-  }
-}
-function ag_schema_type()
-{
-  $schema = 'https://schema.org/';
-  if (is_single()) {
-    $type = "Article";
-  } elseif (is_author()) {
-    $type = 'ProfilePage';
-  } elseif (is_search()) {
-    $type = 'SearchResultsPage';
-  } else {
-    $type = 'WebPage';
-  }
-  echo 'itemscope itemtype="' . esc_url($schema) . esc_attr($type) . '"';
-}
-add_filter('nav_menu_link_attributes', 'ag_schema_url', 10);
-function ag_schema_url($atts)
-{
-  $atts['itemprop'] = 'url';
-  return $atts;
-}
-if (!function_exists('ag_wp_body_open')) {
-  function ag_wp_body_open()
-  {
-    do_action('wp_body_open');
-  }
-}
-add_action('wp_body_open', 'ag_skip_link', 5);
-function ag_skip_link()
-{
-  echo '<a href="#content" class="skip-link screen-reader-text">' . esc_html__('Skip to the content', 'ag') . '</a>';
-}
-add_filter('the_content_more_link', 'ag_read_more_link');
-function ag_read_more_link()
-{
-  if (!is_admin()) {
-    return ' <a href="' . esc_url(get_permalink()) . '" class="more-link">' . sprintf(__('...%s', 'ag'), '<span class="screen-reader-text">  ' . esc_html(get_the_title()) . '</span>') . '</a>';
-  }
-}
-add_filter('excerpt_more', 'ag_excerpt_read_more_link');
-function ag_excerpt_read_more_link($more)
-{
-  if (!is_admin()) {
-    global $post;
-    return ' <a href="' . esc_url(get_permalink($post->ID)) . '" class="more-link">' . sprintf(__('...%s', 'ag'), '<span class="screen-reader-text">  ' . esc_html(get_the_title()) . '</span>') . '</a>';
-  }
-}
-add_filter('big_image_size_threshold', '__return_false');
-add_filter('intermediate_image_sizes_advanced', 'ag_image_insert_override');
-function ag_image_insert_override($sizes)
-{
-  unset($sizes['medium_large']);
-  unset($sizes['1536x1536']);
-  unset($sizes['2048x2048']);
-  return $sizes;
-}
-add_action('widgets_init', 'ag_widgets_init');
-function ag_widgets_init()
-{
-  register_sidebar(array(
-    'name' => esc_html__('Sidebar Widget Area', 'ag'),
-    'id' => 'primary-widget-area',
-    'before_widget' => '<li id="%1$s" class="px-0 border-0 list-group-item mb-3 widget-container %2$s">',
-    'after_widget' => '</li>',
-    'before_title' => '<h3 class="widget-title">',
-    'after_title' => '</h3>',
-  ));
-}
-add_action('wp_head', 'ag_pingback_header');
-function ag_pingback_header()
-{
-  if (is_singular() && pings_open()) {
-    printf('<link rel="pingback" href="%s">' . "\n", esc_url(get_bloginfo('pingback_url')));
-  }
-}
-add_action('comment_form_before', 'ag_enqueue_comment_reply_script');
-function ag_enqueue_comment_reply_script()
-{
-  if (get_option('thread_comments')) {
-    wp_enqueue_script('comment-reply');
-  }
-}
-function ag_custom_pings($comment)
-{
-?>
-  <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>"><?php echo esc_url(comment_author_link()); ?></li>
-<?php
-}
-add_filter('get_comments_number', 'ag_comment_count', 0);
-function ag_comment_count($count)
-{
-  if (!is_admin()) {
-    global $id;
-    $get_comments = get_comments('status=approve&post_id=' . $id);
-    $comments_by_type = separate_comments($get_comments);
-    return count($comments_by_type['comment']);
-  } else {
-    return $count;
-  }
-}
 
-
-
-// Logo
-function setup()
-{
-  add_theme_support('post-thumbnails');
-
-  add_theme_support('custom-logo', array(
-    'height'      => 250,
-    'width'       => 250,
-    'flex-height' => true,
-    'flex-width'  => true,
-  ));
-}
-add_action('after_setup_theme', 'setup');
-
-
-
-
-// Registro do menu
-function menu_ag()
-{
-  register_nav_menus(array(
-    'menu_rodape' => __('Menu Footer'),
-    'social' => __('Social Footer'),
-  ));
+// Registro de menus
+function menu_ag() {
+    register_nav_menus([
+        'menu_rodape' => __('Menu Footer', 'ag'),
+        'social' => __('Social Footer', 'ag'),
+    ]);
 }
 add_action('init', 'menu_ag');
 
-
-// Inclui a classe Walker
-require_once get_stylesheet_directory() . '/template-parts/class-social-menu-walker.php';
-
-// Single category
-function single_category($single_template)
-{
-  global $post;
-
-  $categories = array('blog', 'projetos', 'palestras', 'notas');
-  foreach ($categories as $category) {
-    if (in_category($category, $post->ID)) {
-      $template = get_stylesheet_directory() . '/single-' . $category . '.php';
-      if (file_exists($template)) {
-        return $template;
-      }
-    }
-  }
-
-  return $single_template;
+// Calcular tempo de leitura
+function calculate_reading_time($content) {
+    $word_count = str_word_count(strip_tags($content));
+    return ceil($word_count / 200);
 }
-add_filter('single_template', 'single_category');
-
-
-// SVG Upload
-add_filter('upload_mimes', function ($upload_mimes) {
-  if (! current_user_can('administrator')) {
-    return $upload_mimes;
-  }
-
-  $upload_mimes['svg']  = 'image/svg+xml';
-  $upload_mimes['svgz'] = 'image/svg+xml';
-
-  return $upload_mimes;
-});
-
-// Add thumbail inside rss
-function wpcode_snippet_rss_post_thumbnail($content)
-{
-  global $post;
-  if (has_post_thumbnail($post->ID)) {
-    $content = '<p>' . get_the_post_thumbnail($post->ID) . '</p>' . $content;
-  }
-
-  return $content;
+function display_reading_time() {
+    $reading_time = calculate_reading_time(get_post_field('post_content', get_the_ID()));
+    return sprintf(_n('%s minuto', '%s minutos', $reading_time, 'ag'), $reading_time);
 }
-add_filter('the_excerpt_rss', 'wpcode_snippet_rss_post_thumbnail');
-add_filter('the_content_feed', 'wpcode_snippet_rss_post_thumbnail');
-
-// Remove WordPress version
-add_filter('the_generator', '__return_empty_string');
-
-// Add SVG files mime check.
-add_filter(
-  'wp_check_filetype_and_ext',
-  function ($wp_check_filetype_and_ext, $file, $filename, $mimes, $real_mime) {
-
-    if (! $wp_check_filetype_and_ext['type']) {
-
-      $check_filetype  = wp_check_filetype($filename, $mimes);
-      $ext             = $check_filetype['ext'];
-      $type            = $check_filetype['type'];
-      $proper_filename = $filename;
-
-      if ($type && 0 === strpos($type, 'image/') && 'svg' !== $ext) {
-        $ext  = false;
-        $type = false;
-      }
-
-      $wp_check_filetype_and_ext = compact('ext', 'type', 'proper_filename');
-    }
-
-    return $wp_check_filetype_and_ext;
-  },
-  10,
-  5
-);
-add_filter('wp_check_filetype_and_ext', function ($wp_check_filetype_and_ext, $file, $filename, $mimes, $real_mime) {
-  if (! $wp_check_filetype_and_ext['type']) {
-    $check_filetype  = wp_check_filetype($filename, $mimes);
-    $ext             = $check_filetype['ext'];
-    $type            = $check_filetype['type'];
-    $proper_filename = $filename;
-
-    if ($type && 0 === strpos($type, 'image/') && 'svg' !== $ext) {
-      $ext  = false;
-      $type = false;
-    }
-
-    $wp_check_filetype_and_ext = compact('ext', 'type', 'proper_filename');
-  }
-
-  return $wp_check_filetype_and_ext;
-}, 10, 5);
-
-// Calculate Reading time for the content
-function calculate_reading_time($content)
-{
-  $word_count    = str_word_count(strip_tags($content));
-  $reading_speed = 200;
-  $reading_time  = ceil($word_count / $reading_speed);
-  return $reading_time;
-}
-
-
-
-
-// Display Reading time
-function display_reading_time()
-{
-  $content      = get_post_field('post_content', get_the_ID());
-  $reading_time = calculate_reading_time($content);
-  if (1 === $reading_time) {
-    return sprintf(__('%s minuto', 'text_domain'), $reading_time);
-  } else {
-    return sprintf(__('%s minutos', 'text_domain'), $reading_time);
-  }
-}
-
 add_shortcode('reading_time', 'display_reading_time');
 
-// Redirecionam Páginas de Anexo
-
-function redirect_attachment_page()
-{
-  if (is_attachment()) {
-    global $post;
-    if ($post && $post->post_parent) {
-      wp_redirect(get_permalink($post->post_parent), 301);
-      exit;
-    } else {
-      wp_redirect(home_url(), 301);
-      exit;
+// Personalizar "Leia mais"
+function ag_read_more_link() {
+    if (!is_admin()) {
+        return ' <a href="' . esc_url(get_permalink()) . '" class="more-link">' . __('Leia mais', 'ag') . '</a>';
     }
-  }
+}
+add_filter('the_content_more_link', 'ag_read_more_link');
+
+function ag_excerpt_read_more_link($more) {
+    if (!is_admin()) {
+        return ' <a href="' . esc_url(get_permalink()) . '" class="more-link">' . __('Leia mais', 'ag') . '</a>';
+    }
+}
+add_filter('excerpt_more', 'ag_excerpt_read_more_link');
+
+// Adicionar script de resposta a comentários
+function ag_enqueue_comment_reply_script() {
+    if (get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
+}
+add_action('comment_form_before', 'ag_enqueue_comment_reply_script');
+
+// Redirecionar páginas de anexo
+function redirect_attachment_page() {
+    if (is_attachment()) {
+        global $post;
+        wp_redirect($post->post_parent ? get_permalink($post->post_parent) : home_url(), 301);
+        exit;
+    }
 }
 add_action('template_redirect', 'redirect_attachment_page');
 
-
-// personalização do titulo do arquivo
-function meu_custom_archive_title($title)
-{
-  if (is_category()) {
-    $title = sprintf(__('Artigos em "%s"', 'seu-textdomain'), single_cat_title('', false));
-  } elseif (is_tag()) {
-    $title = sprintf(__('Conteúdos marcados com "%s"', 'seu-textdomain'), single_tag_title('', false));
-  } elseif (is_author()) {
-    $title = sprintf(__('Publicações de: %s', 'seu-textdomain'), '<span class="vcard">' . get_the_author() . '</span>');
-  } elseif (is_year()) {
-    $title = sprintf(__('Arquivos de: %s', 'seu-textdomain'), get_the_date('Y'));
-  } elseif (is_month()) {
-    $title = sprintf(__('Arquivos de: %s', 'seu-textdomain'), get_the_date('F \d\e Y'));
-  } elseif (is_day()) {
-    $title = sprintf(__('Arquivos de: %s', 'seu-textdomain'), get_the_date('j \d\e F \d\e Y'));
-  } elseif (is_post_type_archive()) {
-    $title = post_type_archive_title('', false);
-  } elseif (is_tax()) {
-    $title = sprintf(__('%s', 'seu-textdomain'), single_term_title('', false));
-  } else {
-    $title = __('Arquivos', 'seu-textdomain');
-  }
-  return $title;
+// Registrar o post type "Nota"
+function registrar_post_type_nota() {
+    $args = [
+        'labels' => [
+            'name' => 'Notas',
+            'singular_name' => 'Nota',
+            'menu_name' => 'Notas',
+            'add_new' => 'Adicionar Nova',
+            'add_new_item' => 'Adicionar Nova Nota',
+            'edit_item' => 'Editar Nota',
+            'view_item' => 'Ver Nota',
+            'all_items' => 'Todas as Notas',
+            'search_items' => 'Procurar Notas',
+            'not_found' => 'Nenhuma nota encontrada',
+        ],
+        'public' => true,
+        'show_in_rest' => true,
+        'supports' => ['title', 'editor', 'custom-fields'],
+        'menu_icon' => 'dashicons-book',
+        'has_archive' => true,
+        'rewrite' => ['slug' => 'nota'],
+    ];
+    register_post_type('nota', $args);
 }
-add_filter('get_the_archive_title', 'meu_custom_archive_title');
-
-
-// Registrar o Post Type "Nota"
-function registrar_post_type_nota()
-{
-  $labels = array(
-    'name' => 'Notas',
-    'singular_name' => 'Nota',
-    'menu_name' => 'Notas',
-    'name_admin_bar' => 'Nota',
-    'add_new' => 'Adicionar Nova',
-    'add_new_item' => 'Adicionar Nova Nota',
-    'new_item' => 'Nova Nota',
-    'edit_item' => 'Editar Nota',
-    'view_item' => 'Ver Nota',
-    'all_items' => 'Todas as Notas',
-    'search_items' => 'Procurar Notas',
-    'not_found' => 'Nenhuma nota encontrada',
-    'not_found_in_trash' => 'Nenhuma nota encontrada na lixeira',
-  );
-
-  $args = array(
-    'labels' => $labels,
-    'public' => true,
-    'publicly_queryable' => true,
-    'show_ui' => true,
-    'show_in_menu' => true,
-    'menu_icon'           => 'dashicons-book',
-    'query_var' => true,
-    'rewrite' => array('slug' => 'nota'),
-    'capability_type' => 'post',
-    'has_archive' => true,
-    'hierarchical' => false,
-    'menu_position' => 20,
-    'supports' => array('title', 'editor', 'custom-fields'),
-    'show_in_rest' => true, // Ativa o editor de blocos (Gutenberg)
-  );
-
-  register_post_type('nota', $args);
-}
-
 add_action('init', 'registrar_post_type_nota');
 
-// associar notas ao indieweb
-function associar_nota_ao_indieweb( $post_types ) {
-  $post_types[] = 'nota';
-  return $post_types;
-}
-add_filter( 'indieweb_post_types', 'associar_nota_ao_indieweb' );
+// Permitir upload de SVG
+add_filter('upload_mimes', function ($mimes) {
+    if (current_user_can('administrator')) {
+        $mimes['svg'] = 'image/svg+xml';
+        $mimes['svgz'] = 'image/svg+xml';
+    }
+    return $mimes;
+});
 
-
-// ATIVAR O BLOGROLL
+// Ativar Blogroll
 add_filter('pre_option_link_manager_enabled', '__return_true');
 
+// Botões de compartilhamento no final do conteúdo
+function get_social_share_links() {
+    $post_url = get_permalink();
+    $post_title = get_the_title();
+    $post_excerpt = get_the_excerpt();
+    $post_image = get_the_post_thumbnail_url();
 
-?>			
+    // URLs de compartilhamento
+    $mastodon_url = "https://toot.kyta.dev/?text=" . urlencode($post_title . " " . $post_url);
+    $bluesky_url = "https://bsky.app/intent/post?text=" . urlencode($post_title . " " . $post_url);
+    $facebook_url = "https://www.facebook.com/sharer/sharer.php?u=" . urlencode($post_url);
+    $twitter_url = "https://x.com/intent/tweet?text=" . urlencode($post_title . " " . $post_url);
+    $pinterest_url = "https://pinterest.com/pin/create/button/?url=" . urlencode($post_url) . "&media=" . urlencode($post_image) . "&description=" . urlencode($post_title);
+    $linkedin_url = "https://www.linkedin.com/sharing/share-offsite/?url=" . urlencode($post_url);
+    $email_url = "mailto:?subject=" . rawurlencode($post_title) . "&body=" . rawurlencode($post_title . " - " . $post_url);
+
+    // HTML dos botões de compartilhamento
+    $share_buttons = '<div class="social-share">';
+    $share_buttons .= '<p>Compartilhe</p>';
+    $share_buttons .= '<a class="bluesky" href="' . esc_url($bluesky_url) . '" target="_blank" rel="noopener noreferrer">Bluesky</a>';
+    $share_buttons .= '<a class="email" href="' . esc_url($email_url) . '">E-mail</a>';
+    $share_buttons .= '<a class="facebook" href="' . esc_url($facebook_url) . '" target="_blank" rel="noopener noreferrer">Facebook</a>';
+    $share_buttons .= '<a class="linkedIn" href="' . esc_url($linkedin_url) . '" target="_blank" rel="noopener noreferrer">LinkedIn</a>';
+    $share_buttons .= '<a class="mastodon" href="' . esc_url($mastodon_url) . '" target="_blank" rel="noopener noreferrer">Mastodon</a>';
+    $share_buttons .= '<a class="pinterest" href="' . esc_url($pinterest_url) . '" target="_blank" rel="noopener noreferrer">Pinterest</a>';
+    $share_buttons .= '<a class="twitter" href="' . esc_url($twitter_url) . '" target="_blank" rel="noopener noreferrer">Twitter</a>';
+    $share_buttons .= '</div>';
+
+    return $share_buttons;
+}
+
+require_once get_template_directory() . '/inc/social/mastodon.php';
+require_once get_template_directory() . '/inc/social/twitter.php';
+require_once get_template_directory() . '/inc/social/bluesky.php';
+
+?>

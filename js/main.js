@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Função para adicionar atributos aos links externos
+  /** 
+   * Adiciona atributos aos links externos para melhor acessibilidade e segurança 
+   */
   function addExternalLinkAttributes() {
     const baseUrl = window.location.origin;
     const links = document.querySelectorAll('a');
@@ -7,39 +9,32 @@ document.addEventListener("DOMContentLoaded", function () {
     links.forEach(link => {
       const href = link.getAttribute('href');
 
-      // Verifica se é um link externo
       if (href && href.startsWith('http') && !href.startsWith(baseUrl)) {
-        // Adiciona rel, preservando valores existentes
         let rel = link.getAttribute('rel') || '';
         const requiredRels = ['external', 'no-referrer', 'noopener'];
 
         requiredRels.forEach(value => {
-          if (!rel.split(' ').includes(value)) {
+          if (!rel.includes(value)) {
             rel += ` ${value}`;
           }
         });
 
-        // Garante que os valores estejam corretamente formatados
         link.setAttribute('rel', rel.trim().replace(/\s+/g, ' '));
 
-        // Adiciona target="_blank" se não estiver definido
         if (!link.hasAttribute('target')) {
           link.setAttribute('target', '_blank');
         }
 
-        // Recupera o texto visível do link ou o texto dentro de span.visually-hidden
         let linkText = link.textContent.trim();
         const visuallyHidden = link.querySelector('.visually-hidden');
         if (visuallyHidden) {
           linkText = visuallyHidden.textContent.trim();
         }
 
-        // Adiciona um title dinâmico se não estiver definido
         if (!link.hasAttribute('title')) {
           link.setAttribute('title', `${linkText} irá abrir nova aba`);
         }
 
-        // Adiciona referrerpolicy se não estiver definido
         if (!link.hasAttribute('referrerpolicy')) {
           link.setAttribute('referrerpolicy', 'strict-origin');
         }
@@ -47,22 +42,26 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Função para redirecionar para a URL de tradução do Google
+  /**
+   * Redireciona para a URL de tradução do Google
+   */
   function addTranslationLinks() {
     const translateLinks = document.querySelectorAll('.translate-options a');
 
     translateLinks.forEach(link => {
       link.addEventListener('click', function (event) {
-        event.preventDefault(); // Evita o comportamento padrão do link
+        event.preventDefault();
         const lang = this.getAttribute('data-lang');
         const currentURL = window.location.href;
         const translateURL = `https://translate.google.com/translate?hl=${lang}&sl=auto&tl=${lang}&u=${encodeURIComponent(currentURL)}`;
-        window.location.href = translateURL; // Redireciona para a URL de tradução
+        window.location.href = translateURL;
       });
     });
   }
 
-  // Função para atualizar o tema automaticamente com base nas preferências do sistema
+  /**
+   * Atualiza automaticamente o tema com base nas preferências do sistema
+   */
   function updateThemeAutomatically() {
     const htmlElement = document.querySelector("html");
 
@@ -79,69 +78,80 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-
-  // Inicializa as funções
-  addExternalLinkAttributes();
-  addTranslationLinks();
-  updateThemeAutomatically();
-
-  // Selecionar a div de conteúdo e a div do TOC
-  const article_content = document.querySelector('.article_content');
-  const tocSidebar = document.querySelector('.toc-sidebar');
-
-  if (!article_content || !tocSidebar) {
-    console.warn('Div .article_content ou .toc-sidebar não encontrada.');
-    return;
+  /**
+   * Inicializa manualmente o Bootstrap Collapse para garantir que os elementos funcionem
+   */
+  function initializeCollapse() {
+    const collapseElements = document.querySelectorAll('.collapse');
+    collapseElements.forEach(function (collapseEl) {
+      new bootstrap.Collapse(collapseEl, { toggle: false });
+    });
   }
 
-  // Selecionar todos os cabeçalhos dentro da div de conteúdo
-  const headers = article_content.querySelectorAll('h2, h3');
+  /**
+   * Gera a Tabela de Conteúdos (TOC) automaticamente com base nos títulos do artigo
+   */
+  function generateTOC() {
+    const articleContent = document.querySelector('.article_content');
+    const tocSidebar = document.querySelector('.toc-sidebar');
 
-  if (headers.length === 0) {
-    tocSidebar.innerHTML = '<p>Nenhum cabeçalho encontrado para gerar a Tabela de Conteúdos.</p>';
-    return;
-  }
-
-  // Criar a estrutura básica do TOC
-  let toc = '<nav class="table-of-contents"><h2>Tabela de Conteúdos</h2><ul>';
-
-  headers.forEach(function (header) {
-    // Verificar se o cabeçalho já possui um ID
-    if (!header.id) {
-      // Gerar um ID baseado no texto do cabeçalho
-      let id = header.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
-      header.id = id;
+    if (!articleContent || !tocSidebar) {
+      console.warn('Div .article_content ou .toc-sidebar não encontrada.');
+      return;
     }
 
-    // Determinar o nível do cabeçalho (h2 = 2, h3 = 3, etc.)
-    const level = parseInt(header.tagName.substring(1));
+    const headers = articleContent.querySelectorAll('h2, h3');
 
-    // Adicionar classe baseada no nível para estilização
-    toc += `<li class="toc-level-${level}"><a href="#${header.id}">${header.textContent}</a></li>`;
-  });
+    if (headers.length === 0) {
+      tocSidebar.innerHTML = '<p>Nenhum cabeçalho encontrado para gerar a Tabela de Conteúdos.</p>';
+      return;
+    }
 
-  toc += '</ul></nav>';
+    let toc = '<nav class="table-of-contents"><h2>Tabela de Conteúdos</h2><ul>';
 
-  // Inserir o TOC na div do TOC Sidebar
-  tocSidebar.innerHTML = toc;
-
-  // Implementar Scroll Suave (Opcional)
-  const tocLinks = tocSidebar.querySelectorAll('a');
-
-  tocLinks.forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('href').substring(1);
-      const targetElement = document.getElementById(targetId);
-
-      if (targetElement) {
-        const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 20; // Ajuste o offset conforme necessário
-
-        window.scrollTo({
-          top: offsetTop,
-          behavior: 'smooth'
-        });
+    headers.forEach(function (header) {
+      if (!header.id) {
+        let id = header.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        header.id = id;
       }
+
+      const level = parseInt(header.tagName.substring(1));
+      toc += `<li class="toc-level-${level}"><a href="#${header.id}">${header.textContent}</a></li>`;
     });
-  });
+
+    toc += '</ul></nav>';
+    tocSidebar.innerHTML = toc;
+
+    const tocLinks = tocSidebar.querySelectorAll('a');
+
+    tocLinks.forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 20;
+
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  }
+
+  /**
+   * Inicializa todas as funções do script
+   */
+  function initialize() {
+    addExternalLinkAttributes();
+    addTranslationLinks();
+    updateThemeAutomatically();
+    generateTOC();
+    initializeCollapse();
+  }
+
+  initialize();
 });

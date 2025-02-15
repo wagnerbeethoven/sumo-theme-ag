@@ -1,45 +1,43 @@
-.share {
-  @extend .list-unstyled;
-  @extend .list-inline;
-  margin-bottom: 0;
-  li {
-    @extend .me-3;
-    display: inline-block;
-    margin-bottom: 1rem;
-    a {
-      text-decoration: none;
-      color: #fff;
-      padding: .25rem .5rem;
-      font-size: 0.85rem;
-      border-radius: 0.25rem;
-      border: 1px solid transparent;
-      display: inline-block;
-      span {
-        @extend .me-2;
-      }
-      &:after {
-        display: none;
-      }
-      &.facebook {
-        background-color: #3b5998;
-      }
-      &.twitter {
-        background-color: #55acee;
-      }
-      &.linkedin {
-        background-color: #0077b5;
-      }
-      &.pinterest {
-        background-color: #cb2027;
-      }
-      &.mail {
-        background-color: #444;
-      }
-      &:hover {
-        border-color: var(--color-primary);
-        background: #fff;
-        color: var(--bs-body-color);
-      }
-    }
-  }
+.social-share {
+  @extend .mt-4;
+  @extend .p-3;
+  @extend .bg-body-tertiary;
+  @extend .border;
+  @extend .rounded;
+  @extend .text-center;
 }
+
+.social-share p {
+ @extend .fw-bold;
+}
+
+.social-share a {
+  @extend .d-inline-block;
+  @extend .m-1;
+  @extend .p-2;
+  @extend .text-decoration-none;
+  @extend .text-white;
+  @extend .rounded-1;
+}
+
+.social-share a.mastodon {
+  background-color: #6364ff;
+} /* Mastodon */
+.social-share a.bluesky {
+  background-color: #1da1f2;
+} /* Bluesky */
+.social-share a.facebook {
+  background-color: #3b5998;
+} /* Facebook */
+.social-share a.twitter {
+  background-color: #000000;
+} /* X (Twitter) */
+.social-share a.pinterest {
+  background-color: #bd081c;
+} /* Pinterest */
+.social-share a.linkedIn {
+  background-color: #0077b5;
+} /* LinkedIn */
+.social-share a.email {
+  background-color: #ff6600;
+} /* Email */

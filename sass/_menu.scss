@@ -41,7 +41,10 @@
 
 #ez-toc-container {
   @extend .sticky-top;
-  @extend .bg-white;
+  & > * {
+    background-color: transparent;
+  }
+
   top: 1.5rem;
 
   ul {
@@ -68,5 +71,34 @@
     @extend .fw-semibold;
     font-weight: 500;
     margin-bottom: 0.5rem;
+    @extend .d-none;
+  }
+}
+
+details.toc-post {
+  @extend .border;
+  @extend .rounded;
+  @extend .p-3;
+  transition: all 0.3s ease-in-out;
+  summary {
+    cursor: pointer;
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .justify-content-between;
+    @extend .fw-bold;
+    &:after {
+      content: "›";
+      font-size: 14px;
+      margin-left: 8px;
+      transition: transform 0.3s ease;
+      transform: rotate(90deg);
+    }
+  }
+  &[open] summary {
+    @extend .mb-3;
+    &:after {
+      content: "›";
+      transform: rotate(180deg);
+    }
   }
 }

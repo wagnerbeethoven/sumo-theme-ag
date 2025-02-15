@@ -1,7 +1,6 @@
 <?php get_template_part('template-parts/banner', 'banner'); ?>
 
 <div class="row pt-4">
-    <?php get_template_part('template-parts/sidebar', 'sidebar'); ?>
 
     <div class="col-12 mx-auto col-md-8 entry-content">
         <article id="post-<?php the_ID(); ?>" <?php post_class('e-content'); ?>>
@@ -10,6 +9,8 @@
                 <?php get_template_part('template-parts/post-info', 'post-info'); ?>
                 <?php get_template_part('template-parts/summary', 'summary'); ?>
             </header>
+            
+            <?php get_template_part('template-parts/sidebar', 'sidebar'); ?>
 
             <div class="article_content">
                 <?php the_content(); ?>

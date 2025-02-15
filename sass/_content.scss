@@ -8,7 +8,7 @@
   &-banner {
     @extend .ratio;
     @extend .ratio-21x9;
-    aspect-ratio: 3 / 2 !important;
+    // aspect-ratio: 3 / 2 !important;
     img {
       @extend .rounded;
       @extend .object-fit-cover;
@@ -68,9 +68,9 @@
     }
 
     &-footer {
-      @extend .border-top;
+      // @extend .border-top;
       padding-top: 3rem;
-      margin-top: 3rem;
+      // margin-top: 3rem;
     }
 
     .bi {
