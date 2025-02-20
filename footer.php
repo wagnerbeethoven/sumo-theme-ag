@@ -8,7 +8,7 @@
 
   <div class="footer-container social-footer">
 
-    <nav class="menu-footer-pages">
+    <nav class="menu-footer-pages w-100 align-items-start d-flex">
       <?php
       wp_nav_menu(array(
         'theme_location' => 'menu_rodape',
@@ -16,6 +16,23 @@
         'menu_class'     => 'footer-menu',
       ));
       ?>
+<details title="Exibir outros links" class="outros-links">
+  <summary><i class="bi bi-three-dots-vertical"></i></summary>
+ <ul>
+	 <li><a href="https://wagnerbeethoven.com.br/sobre/meu-curriculo/">Meu currículo</a></li>
+	 <li><a href="https://wagnerbeethoven.com.br/sobre/sobre-site/">Sobre o site</a></li>
+	 <li><a href="https://wagnerbeethoven.com.br/recursos/">Recursos</a></li>
+    <li><a href="https://wagnerbeethoven.com.br/arquivo/">Arquivo do site</a></li>
+    <li><a href="https://wagnerbeethoven.com.br/blogroll/">Blogroll</a></li>
+    <li><a href="https://wagnerbeethoven.com.br/declaracao-de-acessibilidade/">Declaração de acessibilidade</a></li>
+	<li><a href="https://wagnerbeethoven.com.br/now/">O que estou fazendo agora?</a></li>
+	<li><a href="https://wagnerbeethoven.com.br/politica-de-privacidade/">Politica de privacidade</a></li>
+  </ul>
+</details>
+
+  
+  
+		
     </nav>
     <nav class="menu-footer-social">
       <?php get_template_part('template-parts/social'); ?>
@@ -31,7 +48,14 @@
 </footer>
 
 </div>
+
+
+
 <?php wp_footer(); ?>
+
+<!-- Bootstrap JS --><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Google Translate --><script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<!-- Script principal do tema --><script src="<?php echo get_template_directory_uri(); ?>/js/main.js"></script>
 
 <!-- Modal do Bootstrap -->
 <div class="modal fade" id="translateModal" tabindex="-1" aria-labelledby="translateModalLabel" aria-hidden="true">
